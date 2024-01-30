@@ -1,0 +1,6 @@
+@LuxeLoft.Server_HostAddress = http://localhost:5208
+
+GET {{LuxeLoft.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
