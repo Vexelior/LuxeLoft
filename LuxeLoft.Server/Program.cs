@@ -1,3 +1,6 @@
+using LuxeLoft.Server.Context;
+using LuxeLoft.Server.Extension;
+using Microsoft.EntityFrameworkCore;
 
 namespace LuxeLoft.Server
 {
@@ -7,7 +10,9 @@ namespace LuxeLoft.Server
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -15,6 +20,20 @@ namespace LuxeLoft.Server
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            using IServiceScope scope = app.Services.CreateScope();
+            IServiceProvider services = scope.ServiceProvider;
+            try
+            {
+                ApplicationDbContext _context = services.GetRequiredService<ApplicationDbContext>();
+                _context.Database.Migrate();
+                app.SeedData();
+            }
+            catch (Exception ex)
+            {
+                ILogger<Program> logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occurred seeding the database.");
+            }
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -27,12 +46,8 @@ namespace LuxeLoft.Server
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.MapFallbackToFile("/index.html");
 
             app.Run();
