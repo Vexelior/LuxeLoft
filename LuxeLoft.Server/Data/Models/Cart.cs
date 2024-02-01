@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
-namespace LuxeLoft.Server.Models
+namespace LuxeLoft.Server.Data.Models
 {
     public class Cart
     {

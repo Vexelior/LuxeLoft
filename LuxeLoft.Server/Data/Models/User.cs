@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LuxeLoft.Server.Models
+namespace LuxeLoft.Server.Data.Models
 {
     public class User
     {

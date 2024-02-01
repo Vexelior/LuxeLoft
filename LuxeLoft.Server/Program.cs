@@ -1,4 +1,4 @@
-using LuxeLoft.Server.Context;
+using LuxeLoft.Server.Data.Context;
 using LuxeLoft.Server.Extension;
 using Microsoft.EntityFrameworkCore;
 

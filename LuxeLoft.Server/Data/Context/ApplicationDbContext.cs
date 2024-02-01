@@ -1,7 +1,7 @@
-﻿using LuxeLoft.Server.Models;
+﻿using LuxeLoft.Server.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LuxeLoft.Server.Context
+namespace LuxeLoft.Server.Data.Context
 {
     public class ApplicationDbContext : DbContext
     {

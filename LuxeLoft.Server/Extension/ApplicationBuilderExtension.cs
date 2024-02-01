@@ -1,5 +1,5 @@
-﻿using LuxeLoft.Server.Context;
-using LuxeLoft.Server.Models;
+﻿using LuxeLoft.Server.Data.Context;
+using LuxeLoft.Server.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -41,6 +41,8 @@ namespace LuxeLoft.Server.Extension
 
                     }
                 }
+
+                // TODO: Add more seed data for cart and user
             }
             else
             {

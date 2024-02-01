@@ -1,5 +1,5 @@
-﻿using LuxeLoft.Server.Context;
-using LuxeLoft.Server.Models;
+﻿using LuxeLoft.Server.Data.Context;
+using LuxeLoft.Server.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
