@@ -2,9 +2,6 @@
 using LuxeLoft.Server.Data.Models.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System;
-using System.Text.Json;
 
 namespace LuxeLoft.Server.Controllers
 {
@@ -13,11 +10,11 @@ namespace LuxeLoft.Server.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductController(ApplicationDbContext context)
         {
             _context = context;
         }
