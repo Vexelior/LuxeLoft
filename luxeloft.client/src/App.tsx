@@ -1,5 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTruck, faMedal, faTag, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { Button, Container, Col, Row } from 'react-bootstrap';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import BannerImage from './assets/images/baner-right-image-04.jpg';
+import YearlyBanner from './assets/images/baner-right-image-01.jpg';
 import HomeFooter from './components/Footers/HomeFooter';
 import HomeNavbar from './components/Navbars/HomeNavbar';
 import HomeLayout from './components/Layouts/HomeLayout';
@@ -11,111 +14,84 @@ function App() {
         <>
             <HomeLayout>
                 <HomeNavbar />
-                <section id="home" className="position-relative overflow-hidden bg-light-blue">
-                    <Swiper className="main-swiper">
-                        <SwiperSlide>
-                            <Container>
-                                <Row className="d-flex align-items-center">
-                                    <Col md={6}>
-                                        <div className="banner-content">
-                                            <h1 className="display-2 text-uppercase text-dark pb-5">
-                                                New Year Sale
-                                            </h1>
-                                            <Button href="#" className="btn-medium btn-dark text-uppercase btn-rounded-none">
-                                                Shop Product
-                                            </Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Container>
-                                <Row className="d-flex flex-wrap align-items-center">
-                                    <Col md={6}>
-                                        <div className="banner-content">
-                                            <h1 className="display-2 text-uppercase text-dark pb-5">Technology Hack You Won't Get</h1>
-                                            <Button href="shop.html" className="btn-medium btn-dark text-uppercase btn-rounded-none">
-                                                Shop Product
-                                            </Button>
-                                        </div>
-                                    </Col>
-                                    <Col md={5}>
-                                        <div className="image-holder">
-                                            <img src="images/banner-image.png" alt="banner" />
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </SwiperSlide>
-                    </Swiper>
-                    <div className="swiper-icon swiper-arrow swiper-arrow-prev">
-                        <svg className="chevron-left">
-                            <use xlinkHref="#chevron-left" />
-                        </svg>
-                    </div>
-                    <div className="swiper-icon swiper-arrow swiper-arrow-next">
-                        <svg className="chevron-right">
-                            <use xlinkHref="#chevron-right" />
-                        </svg>
-                    </div>
+                <section id="home" className="position-relative overflow-hidden padding-xlarge bg-white">
+                    <Container>
+                        <Row className="d-flex align-items-center">
+                            <Col md={6}>
+                                <div className="banner-content">
+                                    <h1 className="display-2 text-uppercase text-dark pb-5">
+                                        LUXELOFT
+                                    </h1>
+                                    <p>
+                                        Explore the world of luxury living through LuxeLoft. We offer a wide range of luxurious clothes and fashion items to help you create the perfect living space.
+                                    </p>
+                                    <Button href="#" className="btn-medium btn-dark text-uppercase btn-rounded-none">
+                                        Shop Now!
+                                    </Button>
+                                </div>
+                            </Col>
+                            <Col md={6}>
+                                <img
+                                    src={BannerImage}
+                                    alt="Home Banner"
+                                    className="img-fluid"
+                                />
+                            </Col>
+                        </Row>
+                    </Container>
                 </section>
-                <section id="company-services" className="padding-large">
+                <section id="promote" className="padding-xlarge bg-light">
                     <Container>
                         <Row>
                             <Col lg={3} md={6} className="pb-3">
                                 <div className="icon-box d-flex">
-                                    <div className="icon-box-icon pe-3 pb-3">
-                                        {/* Replace the SVG below with your actual SVG component */}
-                                        <svg className="cart-outline">
-                                            <use xlinkHref="#cart-outline" />
-                                        </svg>
-                                    </div>
                                     <div className="icon-box-content">
-                                        <h3 className="card-title text-uppercase text-dark">Free delivery</h3>
-                                        <p>Consectetur adipi elit lorem ipsum dolor sit amet.</p>
+                                        <h3 className="card-title text-uppercase text-dark">
+                                            <FontAwesomeIcon icon={faTruck} />
+                                            &nbsp;Free delivery
+                                        </h3>
+                                        <p>
+                                            We provide free delivery on all orders over $100.
+                                        </p>
                                     </div>
                                 </div>
                             </Col>
                             <Col lg={3} md={6} className="pb-3">
                                 <div className="icon-box d-flex">
-                                    <div className="icon-box-icon pe-3 pb-3">
-                                        {/* Replace the SVG below with your actual SVG component */}
-                                        <svg className="quality">
-                                            <use xlinkHref="#quality" />
-                                        </svg>
-                                    </div>
                                     <div className="icon-box-content">
-                                        <h3 className="card-title text-uppercase text-dark">Quality guarantee</h3>
-                                        <p>Dolor sit amet orem ipsu mcons ectetur adipi elit.</p>
+                                        <h3 className="card-title text-uppercase text-dark">
+                                            <FontAwesomeIcon icon={faMedal} />
+                                            &nbsp;Quality guarantee
+                                        </h3>
+                                        <p>
+                                            Best quality products to our customers.
+                                        </p>
                                     </div>
                                 </div>
                             </Col>
                             <Col lg={3} md={6} className="pb-3">
                                 <div className="icon-box d-flex">
-                                    <div className="icon-box-icon pe-3 pb-3">
-                                        {/* Replace the SVG below with your actual SVG component */}
-                                        <svg className="price-tag">
-                                            <use xlinkHref="#price-tag" />
-                                        </svg>
-                                    </div>
                                     <div className="icon-box-content">
-                                        <h3 className="card-title text-uppercase text-dark">Daily offers</h3>
-                                        <p>Amet consectetur adipi elit loreme ipsum dolor sit.</p>
+                                        <h3 className="card-title text-uppercase text-dark">
+                                            <FontAwesomeIcon icon={faTag} />
+                                            &nbsp;Daily offers
+                                        </h3>
+                                        <p>
+                                            Get exciting offers every day on different products by subscribing to our newsletter.
+                                        </p>
                                     </div>
                                 </div>
                             </Col>
-                            <Col lg={3} md={6} className="pb-3">
+                            <Col lg={3} md={6}>
                                 <div className="icon-box d-flex">
-                                    <div className="icon-box-icon pe-3 pb-3">
-                                        {/* Replace the SVG below with your actual SVG component */}
-                                        <svg className="shield-plus">
-                                            <use xlinkHref="#shield-plus" />
-                                        </svg>
-                                    </div>
                                     <div className="icon-box-content">
-                                        <h3 className="card-title text-uppercase text-dark">100% secure payment</h3>
-                                        <p>Rem Lopsum dolor sit amet, consectetur adipi elit.</p>
+                                        <h3 className="card-title text-uppercase text-dark">
+                                            <FontAwesomeIcon icon={faCreditCard} />
+                                            &nbsp;100% secure payment
+                                        </h3>
+                                        <p>
+                                            100% secure payment options including credit card, debit card, and PayPal.
+                                        </p>
                                     </div>
                                 </div>
                             </Col>
@@ -124,33 +100,49 @@ function App() {
                 </section>
                 <section
                     id="yearly-sale"
-                    className="bg-light-blue overflow-hidden mt-5 padding-xlarge"
-                    style={{ backgroundImage: "url('images/single-image1.png')", backgroundPosition: 'right', backgroundRepeat: 'no-repeat' }}
+                    className="bg-white padding-xlarge"
                 >
                     <Row className="d-flex flex-wrap align-items-center">
                         <Col md={6} sm={12}>
                             <div className="text-content offset-4 padding-medium">
                                 <h3>10% off</h3>
                                 <h2 className="display-2 pb-5 text-uppercase text-dark">New year sale</h2>
-                                <Button href="shop.html" className="btn btn-medium btn-dark text-uppercase btn-rounded-none">
+                                <Button href="#" className="btn btn-medium btn-dark text-uppercase btn-rounded-none">
                                     Shop Sale
                                 </Button>
                             </div>
                         </Col>
-                        <Col md={6} sm={12}></Col>
+                        <Col md={6} sm={12}>
+                            <img
+                                src={YearlyBanner}
+                                alt="Yearly Sale"
+                                className="img-fluid"
+                            />
+                        </Col>
                     </Row>
                 </section>
-                <section id="subscribe" className="container-grid padding-medium position-relative overflow-hidden">
+                <section id="subscribe" className="container-grid padding-xlarge position-relative text-dark bg-light">
                     <Container>
                         <Row>
-                            <div className="subscribe-content bg-dark d-flex flex-wrap justify-content-center align-items-center padding-medium">
-                                <Col md={6}>
-                                    <div className="display-header pe-3">
-                                        <h2 className="display-7 text-uppercase text-light">Subscribe Us Now</h2>
-                                        <p>Get latest news, updates and deals directly mailed to your inbox.</p>
-                                    </div>
-                                </Col>
-                            </div>
+                            <Col md={6} sm={12}>
+                                <h2 className="text-uppercase">Subscribe To Our Newsletter</h2>
+                                <p>Get latest news, updates and deals directly mailed to your inbox.</p>
+                            </Col>
+                            <Col md={6} sm={12}>
+                                <form className="d-flex">
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        placeholder="Enter your email"
+                                    />
+                                    <Button
+                                        type="submit"
+                                        className="btn btn-dark btn-medium text-uppercase btn-rounded-none ms-2"
+                                    >
+                                        Subscribe
+                                    </Button>
+                                </form>
+                            </Col>
                         </Row>
                     </Container>
                 </section>
