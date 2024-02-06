@@ -124,6 +124,19 @@ body {
 }
 
 /*
+  ### Ratings ###
+*/
+.fa-star {
+  color: gray;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+}
+
+.fa-star.checked {
+  color: gold;
+}
+
+/*
   ### Footer ###
 */
 .footer-header {

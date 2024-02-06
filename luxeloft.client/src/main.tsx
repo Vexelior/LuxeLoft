@@ -6,6 +6,7 @@ import MensClothing from './components/Pages/MensClothing.tsx'
 import WomensClothing from './components/Pages/WomensClothing.tsx'
 import Jewelery from './components/Pages/Jewelery.tsx'
 import Electronics from './components/Pages/Electronics.tsx'
+import ProductDetails from './components/Pages/ProductDetails.tsx'
 import 'font-awesome/css/font-awesome.min.css'
 import './assets/js/vendor/jquery-1.11.0.min.js'
 import './assets/js/script.js'
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Route path='womens-clothing' element={<WomensClothing />} />
       <Route path='jewelery' element={<Jewelery />} />
       <Route path='electronics' element={<Electronics />} />
+      <Route path='product/:id' element={<ProductDetails />} />
     </Routes>
   </BrowserRouter>
 )
