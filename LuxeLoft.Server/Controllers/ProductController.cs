@@ -165,6 +165,22 @@ namespace LuxeLoft.Server.Controllers
         }
 
         /// <summary>
+        /// Gets all electronics/tech products
+        /// </summary>
+        [HttpGet(Name = "GetElectronics")]
+        public async Task<IActionResult> GetElectronics()
+        {
+            var products = await _context.Products.Where(p => p.Category == "electronics").ToListAsync();
+
+            if (products == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(products);
+        }
+
+        /// <summary>
         /// Checks if a product exists by its id.
         /// </summary>
         /// <param name="id"></param>

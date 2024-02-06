@@ -22,7 +22,7 @@ function HomeLayout() {
                                 <Link to="/mens-clothing" className="dropdown-item">Mens</Link> 
                                 <Link to="/womens-clothing" className="dropdown-item">Womens</Link> 
                                 <Link to="/jewelery" className="dropdown-item">Jewelery</Link> 
-                                <Dropdown.Item href="#">Tech</Dropdown.Item>
+                                <Link to="/electronics" className="dropdown-item">Electronics</Link>
                                 <Dropdown.Item href="#">Best Sellers</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
