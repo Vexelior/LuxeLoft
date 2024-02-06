@@ -2,7 +2,6 @@
 using LuxeLoft.Server.Data.Models.Carts;
 using LuxeLoft.Server.Data.Models.Products;
 using LuxeLoft.Server.Data.Models.Users;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
@@ -114,10 +113,22 @@ namespace LuxeLoft.Server.Extension
                             Ratings = product.Ratings
                         };
 
+                        string imageName = newProduct.Image.Split("/").Last();
+                        string path = Path.Combine(Directory.GetCurrentDirectory(), "Client", "Images", imageName);
+                        byte[] image = client.GetByteArrayAsync(newProduct.Image).Result;
+
+                        // If the image already exists, delete it and create a new one
+                        if (!File.Exists(path))
+                        {
+                            File.WriteAllBytes(path, image);
+                        }
+
+                        newProduct.Image = imageName;
+
                         _context.Add(newProduct);
+                        _context.SaveChanges();
                     }
 
-                    _context.SaveChanges();
                 }
             }
             else

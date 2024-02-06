@@ -17,6 +17,10 @@ function Jewelery() {
             });
     }, []);
 
+    products.forEach((product) => {
+        product.image = 'src/assets/images/products/' + product.image;
+    });
+
     return (
         <>
             <HomeLayout>
