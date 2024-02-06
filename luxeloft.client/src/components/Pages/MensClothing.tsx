@@ -37,7 +37,7 @@ function MensClothing() {
                         <div className="row">
                             {products.map((product) => (
                                 <div className="col-lg-4 col-md-6 col-sm-12" key={product.id}>
-                                    <div className="card">
+                                    <div className="card product-card">
                                         <img src={product.image} className="card-img-top" alt="..." />
                                         <div className="card-body">
                                             <h5 className="card-title">{product.title}</h5>

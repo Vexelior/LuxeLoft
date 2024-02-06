@@ -31,16 +31,6 @@ function ProductDetails() {
             });
     }, [productApiURL]);
 
-    if (productRating.rate !== undefined && productRating.rate % 1 !== 0 && productRating.rate % 1 !== 0.5) {
-        productRating.rate = Math.round(productRating.rate);
-    } else {
-        product.ratings = productRating.rate;
-    }
-
-    if (product.price % 1 === 0) {
-        product.price = product.price + '.00';
-    }
-
     useEffect(() => {
         if (productRating.rate !== undefined) {
             for (let i = 0; i < productRating.rate; i++) {
@@ -48,6 +38,24 @@ function ProductDetails() {
             }
         }
     }, [productRating.rate]);
+
+    if (productRating.rate !== undefined && productRating.rate % 1 !== 0 && productRating.rate % 1 !== 0.5) {
+        productRating.rate = Math.round(productRating.rate);
+    } else {
+        product.ratings = productRating.rate;
+    }
+
+    function handle_decimal_price(price: number) {
+        if (price % 1 !== 0) {
+            price = Math.round(price * 100) / 100;
+        }
+
+        return price.toFixed(2);
+    }
+
+    if (product.price !== undefined) {
+        product.price = handle_decimal_price(product.price);
+    }
 
     return (
         <>
@@ -76,7 +84,7 @@ function ProductDetails() {
                                     <span className="fa fa-star"></span>
                                     <span className="fa fa-star"></span>
                                     <span>&nbsp;({productRating.count})</span>
-                                </div>     
+                                </div>
                                 <button className="btn btn-dark" onClick={() => window.history.back()}>Back</button>
                             </div>
                         </div>
