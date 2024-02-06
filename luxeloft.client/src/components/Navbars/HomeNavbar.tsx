@@ -7,9 +7,9 @@ function HomeLayout() {
         <Navbar id='header-nav' bg="dark" variant="dark" expand="lg" sticky="top" className="navbar navbar-expand-lg px-3 mb-0">
             <Container fluid>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Brand href="#home">
-                    <img src={Logo} alt="LuxeLoft" className="img-fluid nav-logo" />
-                </Navbar.Brand>
+                <Link to="/" className="navbar-brand">
+                    <img src={Logo} alt="Luxeloft" className='img-fluid nav-logo'  />
+                </Link>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto text-uppercase">
                         <Link to="/" className="nav-link me-4">Home</Link>
@@ -18,8 +18,8 @@ function HomeLayout() {
                                 Products
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Link to="all" className="dropdown-item">All</Link>
-                                <Dropdown.Item href="#">Men's</Dropdown.Item>
+                                <Link to="/all-products" className="dropdown-item">All</Link>
+                                <Link to="/mens-clothing" className="dropdown-item">Men's</Link> 
                                 <Dropdown.Item href="#">Women's</Dropdown.Item>
                                 <Dropdown.Item href="#">Kid's</Dropdown.Item>
                                 <Dropdown.Item href="#">Tech</Dropdown.Item>

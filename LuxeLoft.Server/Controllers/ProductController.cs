@@ -117,6 +117,22 @@ namespace LuxeLoft.Server.Controllers
         }
 
         /// <summary>
+        /// Gets all men's products
+        /// </summary>
+        [HttpGet(Name = "GetMensClothing")]
+        public async Task<IActionResult> GetMensClothing()
+        {
+            var products = await _context.Products.Where(p => p.Category == "men's clothing").ToListAsync();
+
+            if (products == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(products);
+        }
+
+        /// <summary>
         /// Checks if a product exists by its id.
         /// </summary>
         /// <param name="id"></param>
