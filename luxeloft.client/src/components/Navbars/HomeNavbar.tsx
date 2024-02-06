@@ -1,4 +1,5 @@
 import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import Logo from '../../assets/images/logo.png';
 
 function HomeLayout() {
@@ -11,17 +12,18 @@ function HomeLayout() {
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto text-uppercase">
-                        <Nav.Link href="#home" className="me-4">Home</Nav.Link>
+                        <Link to="/" className="nav-link me-4">Home</Link>
                         <Dropdown>
                             <Dropdown.Toggle variant="dark" id="dropdown-basic" className='text-uppercase me-4'>
                                 Products
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href="#all-products">All</Dropdown.Item>
-                                <Dropdown.Item href="#mens">Men's</Dropdown.Item>
-                                <Dropdown.Item href="#womens">Women's</Dropdown.Item>
-                                <Dropdown.Item href="#kids">Kid's</Dropdown.Item>
-                                <Dropdown.Item href="#best-sellers">Best Sellers</Dropdown.Item>
+                                <Link to="all" className="dropdown-item">All</Link>
+                                <Dropdown.Item href="#">Men's</Dropdown.Item>
+                                <Dropdown.Item href="#">Women's</Dropdown.Item>
+                                <Dropdown.Item href="#">Kid's</Dropdown.Item>
+                                <Dropdown.Item href="#">Tech</Dropdown.Item>
+                                <Dropdown.Item href="#">Best Sellers</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                         <Nav.Link href="#yearly-sale" className="me-4">Sale</Nav.Link>

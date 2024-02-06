@@ -45,6 +45,14 @@ namespace LuxeLoft.Server
                 app.UseSwaggerUI();
             }
 
+            // CORS to allow any origin
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
