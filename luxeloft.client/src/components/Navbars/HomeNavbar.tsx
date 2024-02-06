@@ -19,9 +19,9 @@ function HomeLayout() {
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Link to="/all-products" className="dropdown-item">All</Link>
-                                <Link to="/mens-clothing" className="dropdown-item">Men's</Link> 
-                                <Link to="/womens-clothing" className="dropdown-item">Women's</Link> 
-                                <Dropdown.Item href="#">Kid's</Dropdown.Item>
+                                <Link to="/mens-clothing" className="dropdown-item">Mens</Link> 
+                                <Link to="/womens-clothing" className="dropdown-item">Womens</Link> 
+                                <Link to="/jewelery" className="dropdown-item">Jewelery</Link> 
                                 <Dropdown.Item href="#">Tech</Dropdown.Item>
                                 <Dropdown.Item href="#">Best Sellers</Dropdown.Item>
                             </Dropdown.Menu>

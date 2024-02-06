@@ -4,8 +4,8 @@ import HomeNavbar from '../Navbars/HomeNavbar';
 import { useEffect, useState } from 'react';
 import '../../App.css';
 
-function MensClothing() {
-    const apiURL = 'https://localhost:7274/api/Product/GetWomensClothing';
+function Jewelery() {
+    const apiURL = 'https://localhost:7274/api/Product/GetJewelery';
     const [products, setProducts] = useState<any[]>([]);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ function MensClothing() {
                         <div className="row">
                             <div className="col-lg-12">
                                 <h2 className="text-uppercase text-center pb-5">
-                                    Women's Clothing
+                                    Jewelery
                                 </h2>
                             </div>
                         </div>
@@ -51,4 +51,4 @@ function MensClothing() {
         </>
     );
 }
-export default MensClothing;
+export default Jewelery;
