@@ -13,8 +13,9 @@ function HomeLayout() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto text-uppercase">
                         <Link to="/" className="nav-link me-4">Home</Link>
+                        <Nav.Link href="#yearly-sale" className="me-4">Sale</Nav.Link>
                         <Dropdown>
-                            <Dropdown.Toggle variant="dark" id="dropdown-basic" className='text-uppercase me-4'>
+                            <Dropdown.Toggle variant="dark" id="dropdown-basic" className='text-uppercase'>
                                 Products
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -26,8 +27,7 @@ function HomeLayout() {
                                 <Link to="/best-sellers" className="dropdown-item">Best Sellers</Link>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Nav.Link href="#yearly-sale" className="me-4">Sale</Nav.Link>
-                        <Nav.Link href="#yearly-sale" className="me-4">Explore</Nav.Link>
+                        <Nav.Link href="#explore" className="me-4">Explore</Nav.Link>
                         <Nav.Link href="#subscribe" className="me-4">Contact</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

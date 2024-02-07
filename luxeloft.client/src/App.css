@@ -30,13 +30,14 @@
 }
 
 html {
-  font-size: 16px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body {
+  font-size: 16px;
   font-family: var(--body-font);
-  font-size: 14px;
   font-weight: 500;
   line-height: 1.6;
   margin: 0;
@@ -45,6 +46,28 @@ body {
 #root {
   width: 100%;
   height: 100%;
+}
+
+/* 
+  ### Custom Scrollbar ### 
+*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--accent-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--black-color);
+  border-radius: 10px;
+  border: 1px solid var(--gray-color-500);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-color-500);
+  border: 1px solid var(--black-color);
 }
 
 /* 
@@ -121,6 +144,100 @@ body {
 #dropdown-basic {
   color: var(--gray-color-500);
   font-family: var(--body-font);
+  padding: 0.5em;
+  margin-right: 24px;
+  border: none;
+}
+
+#dropdown-basic:hover {
+  background-color: transparent;
+  color: var(--gray-color-500);
+}
+
+@media screen and (max-width: 600px) {
+  #dropdown-basic {
+    padding-right: 0;
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.dropdown-menu {
+  background-color: var(--white-color);
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  color: var(--gray-color-500);
+  font-family: var(--body-font);
+  padding: 0.5em;
+  border: none;
+}
+
+.dropdown-item:hover {
+  background-color: var(--gray-color);
+  color: var(--black-color);
+}
+
+.dropdown-item:focus {
+  background-color: var(--gray-color);
+  color: var(--black-color);
+}
+
+.dropdown-item:active {
+  background-color: var(--accent-color) !important;
+}
+
+/*
+  ### Preloader ###
+*/
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 99999;
+}
+
+.loader {
+  border: 16px solid var(--accent-color);
+  border-top: 16px solid var(--black-color);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+}
+
+.hidden {
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
 }
 
 /*
@@ -140,7 +257,7 @@ body {
   ### Products ###
 */
 .product-card {
-  margin-bottom: 1em; 
+  margin-bottom: 1em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 1rem;
 }
