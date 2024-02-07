@@ -1,7 +1,9 @@
 using LuxeLoft.Server.Data.Context;
+using LuxeLoft.Server.Data.Identity;
 using LuxeLoft.Server.Extension;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LuxeLoft.Server
 {
@@ -18,24 +20,25 @@ namespace LuxeLoft.Server
             builder.Services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddRoles<IdentityRole>()
+                            .AddEntityFrameworkStores<IdentityContext>();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAuthorization();
 
-            builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-                            .AddEntityFrameworkStores<ApplicationDbContext>();
-
             var app = builder.Build();
-
-            app.MapIdentityApi<IdentityUser>();
 
             using IServiceScope scope = app.Services.CreateScope();
             IServiceProvider services = scope.ServiceProvider;
             try
             {
                 ApplicationDbContext _context = services.GetRequiredService<ApplicationDbContext>();
+                IdentityContext _identityContext = services.GetRequiredService<IdentityContext>();
+                _identityContext.Database.Migrate();
                 _context.Database.Migrate();
                 app.SeedData();
             }
@@ -59,8 +62,8 @@ namespace LuxeLoft.Server
             app.UseCors(builder =>
             {
                 builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
             });
 
             app.UseHttpsRedirection();

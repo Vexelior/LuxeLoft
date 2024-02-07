@@ -1,22 +1,56 @@
 ﻿using LuxeLoft.Server.Data.Context;
+using LuxeLoft.Server.Data.Identity;
 using LuxeLoft.Server.Data.Models.Carts;
 using LuxeLoft.Server.Data.Models.Products;
 using LuxeLoft.Server.Data.Models.Users;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace LuxeLoft.Server.Extension
 {
+    using BCrypt.Net;
+
     public static class ApplicationBuilderExtension
     {
         public static IApplicationBuilder SeedData(this IApplicationBuilder app)
         {
             IServiceScope serviceScope = app.ApplicationServices.CreateScope();
             ApplicationDbContext _context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            IdentityContext _identityContext = serviceScope.ServiceProvider.GetRequiredService<IdentityContext>();
+            UserManager<ApplicationUser> _userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            RoleManager<IdentityRole> _roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            using HttpClient client = new();
+            _context.Database.Migrate();
+
+            // Seed roles
+            if (!_identityContext.Roles.Any())
+            {
+                List<IdentityRole> roles =
+                [
+                    new IdentityRole { Name = "HeadAdmin", NormalizedName = "HEADADMIN", ConcurrencyStamp = Guid.NewGuid().ToString("D") },
+                    new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = Guid.NewGuid().ToString("D") },
+                    new IdentityRole { Name = "Customer", NormalizedName = "CUSTOMER", ConcurrencyStamp = Guid.NewGuid().ToString("D") },
+                    new IdentityRole { Name = "Employee", NormalizedName = "EMPLOYEE", ConcurrencyStamp = Guid.NewGuid().ToString("D") },
+                ];
+
+                foreach (IdentityRole role in roles)
+                {
+                    IdentityResult result = _roleManager.CreateAsync(role).Result;
+
+                    if (result.Succeeded)
+                    {
+                        Console.WriteLine($"Created role '{role.Name}'.");
+                    }
+                    else
+                    {
+                        throw new Exception($"Error creating role '{role.Name}'.");
+                    }
+                }
+            }
 
             // Seed users
+            using HttpClient client = new();
             HttpResponseMessage usersResponse = client.GetAsync("https://fakestoreapi.com/users").Result;
 
             if (usersResponse.IsSuccessStatusCode)
@@ -47,15 +81,44 @@ namespace LuxeLoft.Server.Extension
                             Phone = user.Phone
                         };
 
-                        _context.Add(newUser);
-                    }
+                        newUser.Password = BCrypt.EnhancedHashPassword(newUser.Password);
 
-                    _context.SaveChanges();
+                        _context.Add(newUser);
+
+                        ApplicationUser applicationUser = new()
+                        {
+                            UserName = newUser.Username,
+                            Email = newUser.Email,
+                            PhoneNumber = newUser.Phone,
+                            EmailConfirmed = true,
+                            FirstName = newUser.FirstName,
+                            LastName = newUser.LastName,
+                            SecurityStamp = Guid.NewGuid().ToString("D"),
+                            ConcurrencyStamp = Guid.NewGuid().ToString("D"),
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false
+                        };
+
+                        IdentityResult result = _userManager.CreateAsync(applicationUser, newUser.Password).Result;
+
+                        if (result.Succeeded)
+                        {
+                            _userManager.AddToRoleAsync(applicationUser, "Customer").Wait();
+                        }
+                        else
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+
+                        _context.SaveChanges();
+                        _identityContext.SaveChanges();
+                    }
                 }
             }
             else
             {
-                Debug.WriteLine($"Error: {usersResponse.StatusCode} - {usersResponse.ReasonPhrase}");
+                Console.WriteLine($"Error: {usersResponse.StatusCode} - {usersResponse.ReasonPhrase}");
             }
 
             // Seed carts
@@ -87,7 +150,7 @@ namespace LuxeLoft.Server.Extension
             }
             else
             {
-                Debug.WriteLine($"Error: {cartsResponse.StatusCode} - {cartsResponse.ReasonPhrase}");
+                Console.WriteLine($"Error: {cartsResponse.StatusCode} - {cartsResponse.ReasonPhrase}");
             }
 
             // Seed products
@@ -117,7 +180,6 @@ namespace LuxeLoft.Server.Extension
                         string path = Path.Combine(Directory.GetCurrentDirectory(), "Client", "Images", imageName);
                         byte[] image = client.GetByteArrayAsync(newProduct.Image).Result;
 
-                        // If the image already exists, delete it and create a new one
                         if (!File.Exists(path))
                         {
                             File.WriteAllBytes(path, image);
@@ -133,7 +195,7 @@ namespace LuxeLoft.Server.Extension
             }
             else
             {
-                Debug.WriteLine($"Error: {productsResponse.StatusCode} - {productsResponse.ReasonPhrase}");
+                Console.WriteLine($"Error: {productsResponse.StatusCode} - {productsResponse.ReasonPhrase}");
             }
 
             return app;

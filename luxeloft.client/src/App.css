@@ -217,7 +217,7 @@ body {
   margin-left: -60px;
 }
 
-.hidden {
+.fadeOut {
   animation: fadeOut 0.5s forwards;
 }
 

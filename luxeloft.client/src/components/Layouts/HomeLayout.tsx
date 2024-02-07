@@ -6,7 +6,7 @@ function HomeLayout({ children }: { children: React.ReactNode }) {
   function hidePreloader() {
     const preloader = document.querySelector(".preloader");
     if (preloader) {
-        preloader.classList.add("hidden");
+        preloader.classList.add("fadeOut");
     }
   }
   
