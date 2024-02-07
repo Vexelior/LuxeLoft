@@ -1,5 +1,6 @@
 using LuxeLoft.Server.Data.Context;
 using LuxeLoft.Server.Extension;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LuxeLoft.Server
@@ -14,12 +15,21 @@ namespace LuxeLoft.Server
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            builder.Services.AddDbContext<IdentityContext>(options =>
+                options.UseSqlServer(connectionString));
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+                            .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var app = builder.Build();
+
+            app.MapIdentityApi<IdentityUser>();
 
             using IServiceScope scope = app.Services.CreateScope();
             IServiceProvider services = scope.ServiceProvider;
@@ -55,7 +65,7 @@ namespace LuxeLoft.Server
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
-            app.MapControllers();
+            app.MapControllers().RequireAuthorization();
             app.MapFallbackToFile("/index.html");
 
             app.Run();
