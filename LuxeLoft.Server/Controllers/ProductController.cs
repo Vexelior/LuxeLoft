@@ -181,6 +181,23 @@ namespace LuxeLoft.Server.Controllers
         }
 
         /// <summary>
+        /// Gets all best selling products, randomly.
+        /// </summary>
+        /// <returns>A list of 10 products.</returns>
+        [HttpGet(Name = "GetBestSellers")]
+        public async Task<IActionResult> GetBestSellers()
+        {
+            var products = await _context.Products.OrderBy(p => Guid.NewGuid()).Take(10).ToListAsync();
+
+            if (products == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(products);
+        }
+
+        /// <summary>
         /// Checks if a product exists by its id.
         /// </summary>
         /// <param name="id"></param>

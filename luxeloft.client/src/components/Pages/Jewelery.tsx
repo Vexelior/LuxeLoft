@@ -19,6 +19,10 @@ function Jewelery() {
 
     products.forEach((product) => {
         product.image = 'src/assets/images/products/' + product.image;
+
+        if (product.title.length > 15) {
+            product.title = product.title.substring(0, 15) + '...';
+        }
     });
 
     return (

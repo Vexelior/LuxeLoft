@@ -6,7 +6,7 @@ import '../../App.css';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 function AllProducts() {
-    const apiURL = 'https://localhost:7274/api/Product/GetProducts';
+    const apiURL = 'https://localhost:7274/api/Product/GetBestSellers';
     const [products, setProducts] = useState<any[]>([]);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ function AllProducts() {
                         <Row>
                             <Col>
                                 <h2 className="text-uppercase text-center pb-5">
-                                    All Products
+                                    Best Sellers
                                 </h2>
                             </Col>
                         </Row>
