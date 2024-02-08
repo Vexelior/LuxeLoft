@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LuxeLoft.Server.Controllers
 {
     using BCrypt.Net;
+    using LuxeLoft.Server.Data.Models.Identity;
 
     /// <summary>
     /// Account controller for account related operations.
@@ -20,7 +21,7 @@ namespace LuxeLoft.Server.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, 
+        public AccountController(UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
@@ -33,10 +34,17 @@ namespace LuxeLoft.Server.Controllers
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        [HttpGet(Name = "Login")]
-        public async Task<IActionResult> Login(string email, string password)
+        [HttpPost(Name = "Login")]
+        public async Task<IActionResult> Login(LoginModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+            var userExists = await _userManager.FindByEmailAsync(model.Email);
+
+            if (userExists == null)
+            {
+                return BadRequest("Invalid username or password.");
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
             if (result.Succeeded)
             {
@@ -49,20 +57,18 @@ namespace LuxeLoft.Server.Controllers
         /// <summary>
         /// Register method.
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="model"></param>
         [HttpPost(Name = "Register")]
-        public async Task<IActionResult> Register(string email, string password, string firstName, string lastName, string phoneNumber)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
             var user = new ApplicationUser
             {
-                UserName = email,
-                Email = email,
-                PhoneNumber = phoneNumber,
+                UserName = model.Email,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
                 EmailConfirmed = true,
-                FirstName = firstName,
-                LastName = lastName,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 SecurityStamp = Guid.NewGuid().ToString("D"),
                 ConcurrencyStamp = Guid.NewGuid().ToString("D"),
                 LockoutEnabled = false,
@@ -70,7 +76,12 @@ namespace LuxeLoft.Server.Controllers
                 TwoFactorEnabled = false
             };
 
-            var result = await _userManager.CreateAsync(user, password);
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result is not null)
+            {
+                return BadRequest($"A user with email '{model.Email}' already exists.");
+            }
 
             if (result.Succeeded)
             {

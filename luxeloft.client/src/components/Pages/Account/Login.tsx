@@ -3,6 +3,7 @@ import HomeFooter from '../../Footers/HomeFooter';
 import HomeNavbar from '../../Navbars/HomeNavbar';
 import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
 import '../../../App.css'
 
 function Login() {
@@ -13,26 +14,28 @@ function Login() {
 
     const apiURL = 'https://localhost:7274/api/Account/Login';
 
-    async function login() {
+    async function login(e: unknown) {
+        e.preventDefault();
         setError("");
         setLoading(true);
         if (email === "" || password === "") {
-            setError("Please fill in all fields");
+            setError("Please fill in all fields.");
             setLoading(false);
             return;
         }
-        const response = await fetch(apiURL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
+        axios.post(apiURL, {
+            email: email,
+            password: password
+        }).then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                localStorage.setItem("token", response.data.token);
+                window.location.href = "/";
+            }
+        }).catch(error => {
+            console.log(error);
+            setError("Invalid email or password. Please try again.");
         });
-        const data = await response.json();
-        if (response.ok) {
-            localStorage.setItem("token", data.token);
-            window.location.href = "/";
-        } else {
-            setError(data);
-        }
         setLoading(false);
     }
 
