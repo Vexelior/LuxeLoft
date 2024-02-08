@@ -18,7 +18,7 @@ function HomeLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Preloader />
-      <main>
+      <main className="wrapper">
           {children}
       </main>
     </>
