@@ -1,5 +1,6 @@
 ﻿using LuxeLoft.Server.Data.Context;
 using LuxeLoft.Server.Data.Models.Carts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ namespace LuxeLoft.Server.Controllers
     /// <summary>
     /// The controller for the carts in the database.
     /// </summary>
+    [AllowAnonymous]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class CartController : ControllerBase
