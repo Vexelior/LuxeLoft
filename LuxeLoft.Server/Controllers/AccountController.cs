@@ -9,6 +9,9 @@ namespace LuxeLoft.Server.Controllers
 {
     using BCrypt.Net;
     using LuxeLoft.Server.Data.Models.Identity;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using System.Security.Claims;
 
     /// <summary>
     /// Account controller for account related operations.
@@ -44,10 +47,33 @@ namespace LuxeLoft.Server.Controllers
                 return BadRequest("Invalid username or password.");
             }
 
+            var currentUserId = _userManager.GetUserId(User);
+
+            if (currentUserId != null)
+            {
+                return BadRequest("Another account is currently logged in.");
+            }
+
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
             if (result.Succeeded)
             {
+                var claims = new List<Claim>
+                {
+                    new(ClaimTypes.Name, model.Email),
+                    new(ClaimTypes.Email, model.Email)
+                };
+
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+                var props = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTime.UtcNow.AddDays(7)
+                };
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
+
                 return Ok();
             }
 
@@ -98,6 +124,7 @@ namespace LuxeLoft.Server.Controllers
         [HttpGet(Name = "Logout")]
         public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync();
             await _signInManager.SignOutAsync();
             return Ok();
         }

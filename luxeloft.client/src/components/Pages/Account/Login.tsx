@@ -29,8 +29,7 @@ function Login() {
         }).then(response => {
             console.log(response);
             if (response.status === 200) {
-                localStorage.setItem("token", response.data.token);
-                window.location.href = "/";
+                console.log(response.data);                
             }
         }).catch(error => {
             console.log(error);
